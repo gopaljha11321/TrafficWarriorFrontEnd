@@ -16,7 +16,7 @@
     "jquery": "^3.6.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-ionicons": "^4.2.0",
+    "react-ionicons": "^1.4.6",
     "react-linkedin-login-oauth2": "^2.0.1",
     "react-router-dom": "^6.6.1",
     "react-spinners": "^0.13.7",
