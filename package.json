@@ -9,8 +9,7 @@
     "deploy": "gh-pages -d build",
     "start": "vite",
     "build": "vite build",
-    "preview": "vite preview",
-    "check": ""
+    "preview": "vite preview"
   },
   "dependencies": {
     "formik": "^2.2.9",
