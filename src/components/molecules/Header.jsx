@@ -1,8 +1,10 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 import "./header.css";
 import "./test.css";
 const Header = (props) => {
+  const history = useNavigate();
   useEffect(() => {
     var list = document.querySelectorAll(".navigation li");
     function activeLink() {
@@ -90,7 +92,7 @@ const Header = (props) => {
           </li>
 
           <li>
-            <a href="/teach">
+            <a href="/signOut">
               <span className="icon">
                 <ion-icon name="log-out-outline"></ion-icon>
               </span>

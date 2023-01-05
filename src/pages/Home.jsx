@@ -3,6 +3,7 @@ import { useFormik } from "formik";
 import { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import HashLoader from "react-spinners/HashLoader";
+import env from "../conf/env";
 import "./style.css";
 const initialValues = {
   login_email: "",
@@ -33,6 +34,7 @@ const Home = () => {
   const [registerPage, setregisterPage] = useState(false);
 
   useEffect(() => {
+    document.title="Welcome";
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
@@ -50,6 +52,10 @@ const Home = () => {
     z.style.left = "0px";
   }
   useEffect(() => {
+    if(localStorage.getItem("id")!=null)
+    {
+      history('/dashboard');
+    }
     setX(document.getElementById("login"));
     setY(document.getElementById("register"));
     setZ(document.getElementById("btn"));
@@ -59,11 +65,25 @@ const Home = () => {
     }
   });
   const loginCheck = async() => {
+    
     const data={
     email:values.login_email,
     password:values.login_password
     }
-    axios.post("http://localhost:3001/login",data).then((res)=>
+    if(data.email==="")
+   {
+    setError("Please Enter Email")
+   }
+   else if(data.password==="")
+   {
+    setError("Please Enter Password")
+   }
+   else if(values.save===false)
+   {
+    setError("Please Select Remember Password")
+   }
+   else{
+    axios.post(env[process.env.NODE_ENV]?.appServer+"login",data).then((res)=>
     {
       setLoading(false);
       if(res.data.res_code)
@@ -77,9 +97,10 @@ const Home = () => {
     })
     await setTimeout(() => {
       setLoading(false);
-    }, 3000);
+    }, 10000);
     setLoading(true);
     setError("Server Down")
+  }
    
   };
   const registerCheck = async() => {
@@ -103,7 +124,7 @@ const Home = () => {
    
   else if(values.condition)
     {
-      axios.post("http://localhost:3001/register",data).then((res)=>
+      axios.post(env[process.env.NODE_ENV]?.appServer+"register",data).then((res)=>
       {
         if(res.data.res_code!=1)
         {

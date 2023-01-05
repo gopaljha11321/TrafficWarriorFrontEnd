@@ -2,6 +2,7 @@ import State from "../learning/State";
 import Effect from '../learning/UseEffect';
 import Home from '../pages/Home';
 import Dashboard from "../pages/dashbord";
+import SignOut from "../components/atoms/SignOut";
 export const main=[
     {
         path:'/state',
@@ -18,5 +19,9 @@ export const main=[
     {
         path:'/Dashboard',
         component:Dashboard
+    },
+    {
+        path:'/signOut',
+        component:SignOut
     }
 ]

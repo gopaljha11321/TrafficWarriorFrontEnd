@@ -1,7 +1,9 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import HashLoader from "react-spinners/HashLoader";
 import Header from "../components/molecules/Header";
+import env from "../conf/env";
 const override = {
     display: "flex",
     margin: "auto auto",
@@ -11,14 +13,20 @@ const override = {
 
 const Dashboard=()=>
 {
+    document.title="home";
+    const history = useNavigate();
     const [loading, setLoading] = useState(true);
     const[userdata,setUserdata]=useState({});
     useEffect(()=>{
-        document.title="home";
+        if(localStorage.getItem("id")===null)
+    {
+      history('/');
+    }
+    else{
     const data={
         id:localStorage.getItem("id")
     }
-    axios.post("http://localhost:3001/user",data).then((res)=>
+    axios.post(env[process.env.NODE_ENV]?.appServer+"user",data).then((res)=>
     {
         setUserdata(res.data);
         setTimeout(()=>{
@@ -26,6 +34,7 @@ const Dashboard=()=>
         },3000)
         setLoading(true);
     })
+}
     },[])
 
     return (<>
