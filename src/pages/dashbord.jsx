@@ -28,11 +28,18 @@ const Dashboard=()=>
     }
     axios.post(env[process.env.NODE_ENV]?.appServer+"user",data).then((res)=>
     {
+        if(res.data?.msg==="wrong id")
+        {
+            localStorage.clear();
+            history('/');
+        }
+        else{
         setUserdata(res.data);
         setTimeout(()=>{
             setLoading(false);  
         },3000)
         setLoading(true);
+    }
     })
 }
     },[])

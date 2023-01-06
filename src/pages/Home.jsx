@@ -85,8 +85,8 @@ const Home = () => {
    else{
     axios.post(env[process.env.NODE_ENV]?.appServer+"login",data).then((res)=>
     {
-      setLoading(false);
-      if(res.data.res_code)
+      setLoading(false)
+      if(res.data?.res_code)
       {
         localStorage.setItem("id",res.data.id)
         history('/dashboard');
