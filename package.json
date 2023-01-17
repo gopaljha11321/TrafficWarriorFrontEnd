@@ -9,14 +9,19 @@
     "start": "cross-env NODE_ENV=local vite",
     "build": "cross-env NODE_ENV=production vite build",
     "preview": "vite preview --port 3000",
-    "start_prod":"cross-env NODE_ENV=production vite"
+    "start_prod": "cross-env NODE_ENV=production vite"
   },
   "dependencies": {
     "axios": "^1.2.2",
+    "bootstrap": "^5.2.3",
     "formik": "^2.2.9",
+    "gapi-script": "^1.2.0",
     "jquery": "^3.6.3",
     "react": "^18.2.0",
+    "react-bootstrap": "^2.7.0",
     "react-dom": "^18.2.0",
+    "react-google-login": "^5.2.2",
+    "react-icons": "^4.7.1",
     "react-ionicons": "^1.4.6",
     "react-linkedin-login-oauth2": "^2.0.1",
     "react-router-dom": "^6.6.1",

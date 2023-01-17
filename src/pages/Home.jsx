@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import HashLoader from "react-spinners/HashLoader";
 import env from "../conf/env";
+import { LinkedIn } from 'react-linkedin-login-oauth2';
 import "./style.css";
 const initialValues = {
   login_email: "",
@@ -38,7 +39,7 @@ const Home = () => {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-    }, 3000);
+    }, 10);
     setLoading(true);
   }, []);
   function register() {
@@ -177,7 +178,7 @@ const Home = () => {
               </button>
             </div>
             <div id="login" className="input-group">
-            <div className="text-center text-red-500">{error}</div>
+            <div style={{textAlign:"center",color:"red", width:"100%"}}>{error}</div>
               <input
                 type="text"
                 id="login_email"
@@ -203,9 +204,7 @@ const Home = () => {
                 onChange={handleChange}
                 value={values.save}
               />
-              
-              <h className="Reminder">Remember Password</h>
-              
+              <div className="Reminder" style={{marginTop:"27px"}}>Remember Password</div>
               <button type="submit" className="sb" onClick={loginCheck}>
                 <div className="bg">Login</div>
               </button>
@@ -254,7 +253,7 @@ const Home = () => {
                 value={values.condition}
 
               />
-              <h className="Reminder">I agree to the terms and condition</h>
+              <h className="Reminder" style={{marginTop:"27px"}}>I agree to the terms and condition</h>
               <button type="submit"onClick={registerCheck}>
                 <div className="bg">Register</div>
               </button>

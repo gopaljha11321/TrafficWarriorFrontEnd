@@ -51,7 +51,7 @@ const Dashboard=()=>
           loading={loading}
           size={50}
           cssOverride={override}
-        />:<Header name={userdata.name}/>}
+        />:<Header name={userdata.name} page="Home_page"/>}
      </div>
     </>)
 
