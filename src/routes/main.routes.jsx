@@ -4,6 +4,9 @@ import Home from '../pages/Home';
 import Dashboard from "../pages/dashbord";
 import SignOut from "../components/atoms/SignOut";
 import {LinkedInCallback} from 'react-linkedin-login-oauth2';
+import About from "../pages/about"
+import Report from "../pages/report";
+import Image from "../pages/image"
 export const main=[
     {
         path:'/linkedin',
@@ -30,4 +33,16 @@ export const main=[
         path:'/signOut',
         component:SignOut
     },
+    {
+        path:"/about",
+        component:About
+    },
+    {
+        path:'/report',
+        component:Report
+    },
+    {
+        path:"/image",
+        component:Image
+    }
 ]

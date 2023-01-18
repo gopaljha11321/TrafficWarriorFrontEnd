@@ -136,3 +136,25 @@
  #register{
      left:450px;
  }
+ #eye
+ {
+    position: relative;
+    top:22px;
+    left:90%;
+    cursor: pointer;
+    z-index: 2;
+ }
+ .input-field1
+ {
+    width: 100%;
+    top:-20px;
+     padding: 10px 0;
+     margin: 10px 0;
+     border-left: 0;
+     border-top: 0;
+     border-right: 0;
+     outline:none;
+     background: transparent;
+     position: relative;
+    z-index: 1;
+ }

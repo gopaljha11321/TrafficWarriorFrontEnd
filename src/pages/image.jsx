@@ -1,8 +1,8 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
+import Header from "../components/molecules/Header";
+import {useState,useEffect} from "react";
 import { useNavigate } from 'react-router-dom';
 import HashLoader from "react-spinners/HashLoader";
-import Header from "../components/molecules/Header";
+import axios from "axios";
 import env from "../conf/env";
 const override = {
     display: "flex",
@@ -10,10 +10,9 @@ const override = {
     height: "750px",
     borderColor: "red",
   };
-
-const Dashboard=()=>
+const Image=()=>
 {
-    document.title="home";
+    document.title="Images";
     const history = useNavigate();
     const [loading, setLoading] = useState(true);
     const[userdata,setUserdata]=useState({});
@@ -24,7 +23,6 @@ const Dashboard=()=>
     }
     useEffect(()=>{
         if(localStorage.getItem("id")===null)
-       
     {
       history('/');
     }
@@ -44,27 +42,25 @@ const Dashboard=()=>
         setUserdata(res.data);
         setTimeout(()=>{
             setLoading(false);  
-        },30)
+        },1000)
         setLoading(true);
     }
     })
 }
     },[])
-
-    return (<>
-    <div>
-        {loading?<HashLoader
-          color={"#F37A24"}
-          loading={loading}
-          size={50}
-          cssOverride={override}
-        />:<Header name={userdata.name}profile={profile} changeProfile={changeProfile} email={userdata.email} page="Home_page"/>}
+    return(
+        <> {loading?<HashLoader
+            color={"#F37A24"}
+            loading={loading}
+            size={50}
+            cssOverride={override}
+          />:
+        <Header name={userdata.name}profile={profile} changeProfile={changeProfile} email={userdata.email} page="Image_page"/>}
         <div className="content" style={{width:"100%", height:"500px"}} onClick={()=>
         {
             setProfile(false);
         }}></div>
-     </div>
-    </>)
-
+        </>
+    );
 }
-export default Dashboard;
+export default Image;

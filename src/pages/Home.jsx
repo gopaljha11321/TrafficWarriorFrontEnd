@@ -3,8 +3,8 @@ import { useFormik } from "formik";
 import { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import HashLoader from "react-spinners/HashLoader";
+// import { MailOutline } from 'react-ionicons'
 import env from "../conf/env";
-import { LinkedIn } from 'react-linkedin-login-oauth2';
 import "./style.css";
 const initialValues = {
   login_email: "",
@@ -21,6 +21,36 @@ const override = {
   height: "750px",
   borderColor: "red",
 };
+
+const pass=()=>
+{
+  const class_icon=document.getElementsByTagName('i');
+  const login_password=document.getElementById('login_password');
+  if(class_icon[0].className==="fa fa-eye-slash")
+  {
+    login_password.type="password";
+    class_icon[0].className="fa fa-eye"
+  }
+  else{
+    login_password.type="text";
+    class_icon[0].className="fa fa-eye-slash"
+  }
+}
+const pass1=()=>
+{
+  const class_icon=document.getElementsByTagName('i');
+  const login_password=document.getElementById('register_password');
+  if(class_icon[1].className==="fa fa-eye-slash")
+  {
+    login_password.type="password";
+    class_icon[1].className="fa fa-eye"
+  }
+  else{
+    login_password.type="text";
+    class_icon[1].className="fa fa-eye-slash"
+  }
+}
+
 const Home = () => {
   const history = useNavigate();
   const { values, setValues, handleBlur, handleChange, handleSubmit } = useFormik({
@@ -39,7 +69,7 @@ const Home = () => {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-    }, 10);
+    }, 30);
     setLoading(true);
   }, []);
   function register() {
@@ -188,15 +218,17 @@ const Home = () => {
                 onChange={handleChange}
                 value={values.login_email}
               />
+              <i className="fa fa-eye" id="eye" onClick={pass}></i> 
               <input
                 type="password"
                 id="login_password"
-                className="input-field"
+                className="input-field1"
                 placeholder="Password"
                 onChange={handleChange}
                 value={values.login_password}
                 required
               />
+              
               <input
                 type="checkbox"
                 id="save"
@@ -236,9 +268,10 @@ const Home = () => {
                 onChange={handleChange}
                 value={values.register_email}
               />
+              <i className="fa fa-eye" id="eye" onClick={pass1}></i>
               <input
                 type="text"
-                className="input-field"
+                className="input-field1"
                 placeholder="Password"
                 id="register_password"
                 required
@@ -251,11 +284,10 @@ const Home = () => {
                 className="check-box"
                 onChange={handleChange}
                 value={values.condition}
-
               />
               <h className="Reminder" style={{marginTop:"27px"}}>I agree to the terms and condition</h>
               <button type="submit"onClick={registerCheck}>
-                <div className="bg">Register</div>
+              <div className="bg">Register</div>
               </button>
             </div>
           </div>
