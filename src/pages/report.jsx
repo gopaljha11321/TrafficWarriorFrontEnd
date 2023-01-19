@@ -16,6 +16,11 @@ const Report=()=>
     const history = useNavigate();
     const [loading, setLoading] = useState(true);
     const[userdata,setUserdata]=useState({});
+    const[profile,setProfile]=useState(true);
+    const changeProfile=()=>
+    {
+        setProfile(true);
+    }
     useEffect(()=>{
         if(localStorage.getItem("id")===null)
     {
@@ -25,6 +30,7 @@ const Report=()=>
     const data={
         id:localStorage.getItem("id")
     }
+    setProfile(true);
     axios.post(env[process.env.NODE_ENV]?.appServer+"user",data).then((res)=>
     {
         if(res.data?.msg==="wrong id")
@@ -49,7 +55,11 @@ const Report=()=>
             size={50}
             cssOverride={override}
           />:
-        <Header name={userdata.name} page="Report_page"/>}
+        <Header name={userdata.name} page="Report_page" profile={profile} changeProfile={changeProfile} email={userdata.email}/>}
+         <div className="content" style={{width:"100%", height:"500px"}} onClick={()=>
+        {
+            setProfile(false);
+        }}></div>
         </>
     );
 }
