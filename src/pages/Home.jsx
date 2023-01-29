@@ -3,8 +3,7 @@ import { useFormik } from "formik";
 import { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import HashLoader from "react-spinners/HashLoader";
-// import { MailOutline } from 'react-ionicons'
-import env from "../conf/env";
+import env from "../components/conf/env";
 import "./style.css";
 const initialValues = {
   login_email: "",
@@ -248,7 +247,7 @@ const Home = () => {
             </div>
 
             <div id="register" className="input-group">
-            <div className="text-center text-red-500">{error}</div>
+            <div style={{textAlign:"center",color:"red", width:"100%"}}>{error}</div>
               
               <input
                 type="text"

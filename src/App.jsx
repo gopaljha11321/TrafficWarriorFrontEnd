@@ -2,7 +2,7 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import './App.css';
 import { main } from './routes/main.routes';
 const App = () => {
-  return (
+  return (  
     <>
     <BrowserRouter>
       <Routes>
@@ -17,7 +17,7 @@ const App = () => {
       <Route path="/*" element={<Navigate to="/" />} />
         </Routes>
     </BrowserRouter>
-    </>
+   </>
   );
 }
 export default App

@@ -3,8 +3,6 @@ import {useState} from 'react';
 import { useEffect } from 'react';
 const UseEffect=(prop)=> 
 {
-    // const {...data}=prop.data;
-    // console.log(data.name,data.age,data.number);
     const [count,setCount]=useState(0);
     useEffect(()=>
     {

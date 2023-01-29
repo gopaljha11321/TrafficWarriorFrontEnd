@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import HashLoader from "react-spinners/HashLoader";
 import Header from "../components/molecules/Header";
-import env from "../conf/env";
+import env from "../components/conf/env";
 const override = {
     display: "flex",
     margin: "auto auto",

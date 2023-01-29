@@ -1,8 +1,13 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
-import './header.css'
 import { Link, useNavigate } from "react-router-dom";
+import './header.css';
+import env from "../conf/env";
+
 const Header = (props) => {
   const history = useNavigate();
+  const [profileImg,setProfileImg]=useState("");
+  const[profileImgStatue,setProfileImgStatus]=useState(false);
   const [profile,setProfile]=useState(false);
   const signOut=()=>
   {
@@ -10,6 +15,16 @@ const Header = (props) => {
   }
   useEffect(()=>
   {
+    const user=localStorage.getItem("id");
+    axios.get(env[process.env.NODE_ENV]?.appServer+"profile_image?user="+user).then((res)=>
+    {
+      if(res!="error occure")
+      {
+        setProfileImg(env[process.env.NODE_ENV]?.appServer+"profile_image?user="+user)
+        setProfileImgStatus(true);
+        console.log(profileImg);
+      }
+    })
     if(props?.page)
     {
       const data=document.getElementById(props.page);
@@ -34,7 +49,7 @@ const Header = (props) => {
     <>
     {profile?<>
     <div id="container1" >
-      <div className="image" align="center"style={{fontFamily:"arial,sans-serif",width:"100%",height:"100%"}}><img src="user_icon.webp" width="200px" style={{clipPath:"circle(40%)"}} alt="user_image"/>
+      <div className="image" align="center"style={{fontFamily:"arial,sans-serif",width:"100%",height:"100%"}}>{profileImgStatue?<img src={profileImg} width="200px" height="200px" style={{clipPath:"circle(40%)"}} alt="user_image"/>:<img src="user_icon.webp" width="200px" height="200px"style={{clipPath:"circle(40%)"}} alt="user_image"/>}
       <div id ="edit_image"><img src="edit.png" style={{}} width="42px"/></div>
       <div style={{fontWeight:"700",color:"black",position:"relative",top:"-70px"}}>{props.name}</div>
       <div style={{borderBottom:"1px  solid grey",position:"relative",top:"-70px", paddingBottom:"30px",fontWeight:"500",color:"grey"}}>{props.email}</div>
@@ -70,7 +85,7 @@ const Header = (props) => {
         <Link className="nav-link" to="/signOut" style={{cursor:"pointer",color:"White"}} >Sign Out <span className="sr-only">(current)</span></Link>
       </li>
     </ul>
-    <img src="user_icon.webp" alt="user image" style={{clipPath:"circle(40%)", cursor:"pointer"}} onClick={profile1} width="50px" />
+    {profileImgStatue?<img src={profileImg} alt="user image" style={{clipPath:"circle(40%)", cursor:"pointer"}} onClick={profile1} width="50px" height="50px" />:<img src="user_icon.webp" alt="user image" style={{clipPath:"circle(40%)", cursor:"pointer"}} onClick={profile1} width="50px" height="50px" />}
   </div>
 </nav>
 </div>
