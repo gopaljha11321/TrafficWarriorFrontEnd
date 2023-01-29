@@ -49,8 +49,12 @@ const pass1=()=>
     class_icon[1].className="fa fa-eye-slash"
   }
 }
-
+const Term=()=>
+{
+  return (<h1 className="Reminder" style={{marginTop:"27px"}}>I agree to the terms and condition</h1>)
+}
 const Home = () => {
+  
   const history = useNavigate();
   const { values, setValues, handleBlur, handleChange, handleSubmit } = useFormik({
     initialValues: initialValues,
@@ -284,7 +288,7 @@ const Home = () => {
                 onChange={handleChange}
                 value={values.condition}
               />
-              <h className="Reminder" style={{marginTop:"27px"}}>I agree to the terms and condition</h>
+              <Term></Term>
               <button type="submit"onClick={registerCheck}>
               <div className="bg">Register</div>
               </button>

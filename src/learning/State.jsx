@@ -1,12 +1,22 @@
 import { useState } from 'react';
 import './learning.css';
-import Header from '../components/molecules/Header';
 const State=()=> 
 {
     const [count,setCount]=useState(0);
+    const [array,setArray]=useState(["gopal","ram","shayam","aam","khata","hae"]);
    return (
     <>
-    <Header></Header>
+       {/* if statement in jsx */}
+    {count%5==0 && <div >count is divisable to 5</div>}
+
+
+    {/* loop in jsx */}
+
+    {array.map((item,index)=>
+    {
+       return ( <div key={index}>{item} on index {index}</div>)
+    })}
+
     <div className="container"><div className="text-center">{count}<br/>
         <div className="button1">
     <button onClick={()=>

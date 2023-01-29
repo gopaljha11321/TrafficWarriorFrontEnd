@@ -58,7 +58,7 @@ const Dashboard=()=>
           loading={loading}
           size={50}
           cssOverride={override}
-        />:<Header name={userdata.name}profile={profile} changeProfile={changeProfile} email={userdata.email} page="Home_page"/>}
+        />:<Header name={userdata.name} profile={profile} changeProfile={changeProfile} email={userdata.email} page="Home_page"/>}
         <div className="content" style={{width:"100%", height:"500px"}} onClick={()=>
         {
             setProfile(false);
