@@ -24,7 +24,6 @@ const Dashboard=()=>
     }
     useEffect(()=>{
         if(localStorage.getItem("id")===null)
-       
     {
       history('/');
     }

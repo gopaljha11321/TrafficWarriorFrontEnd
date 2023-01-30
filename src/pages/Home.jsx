@@ -86,7 +86,7 @@ const Home = () => {
     z.style.left = "0px";
   }
   useEffect(() => {
-    if(localStorage.getItem("id")!=null)
+    if(localStorage.getItem("id")!=null&& localStorage.getItem("save")==="enable")
     {
       history('/dashboard');
     }
@@ -112,12 +112,16 @@ const Home = () => {
    {
     setError("Please Enter Password")
    }
-   else if(values.save===false)
-   {
-    setError("Please Select Remember Password")
-   }
-   else{
-    axios.post(env[process.env.NODE_ENV]?.appServer+"login",data).then((res)=>
+  else{
+  if(values.save===false)
+  {
+    localStorage.setItem("save","disable");
+  }
+  else
+  {
+  localStorage.setItem("save","enable");
+  }
+  axios.post(env[process.env.NODE_ENV]?.appServer+"login",data).then((res)=>
     {
       setLoading(false)
       if(res.data?.res_code)
