@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import './header.css';
 import env from "../conf/env";
-
 const Header = (props) => {
   const history = useNavigate();
   const [profileImg,setProfileImg]=useState("");
@@ -22,7 +21,6 @@ const Header = (props) => {
       {
         setProfileImg(env[process.env.NODE_ENV]?.appServer+"profile_image?user="+user)
         setProfileImgStatus(true);
-        console.log(profileImg);
       }
     })
     if(props?.page)
@@ -45,12 +43,39 @@ const Header = (props) => {
     const data=document.getElementById('state');
     data.style.opacity=1;
   }
+  const fileChange= async(event)=>
+  {
+    const config = {
+      headers: { 'content-type': 'multipart/form-data' }
+     }
+     const user=localStorage.getItem("id");
+    const data=new FormData();
+    data.append('image',event.target.files[0]);
+    data.append("id",user);
+    await axios.post(env[process.env.NODE_ENV]?.appServer+"upload_profile_image",data,config).then((res,err)=>
+    {
+      if(err)
+      {
+        return ;
+      }
+    })
+    axios.get(env[process.env.NODE_ENV]?.appServer+"profile_image?user="+user).then((res)=>
+    {
+      if(res!="error occure")
+      {
+        setProfileImgStatus(false);
+        setProfileImg(env[process.env.NODE_ENV]?.appServer+"profile_image?user="+user)
+       
+      }
+    })
+    
+  }
   return ( 
     <>
     {profile?<>
     <div id="container1" >
       <div className="image" align="center"style={{fontFamily:"arial,sans-serif",width:"100%",height:"100%"}}>{profileImgStatue?<img src={profileImg} width="200px" height="200px" style={{clipPath:"circle(40%)"}} alt="user_image"/>:<img src="user_icon.webp" width="200px" height="200px"style={{clipPath:"circle(40%)"}} alt="user_image"/>}
-      <div id ="edit_image"><img src="edit.png" style={{}} width="42px"/></div>
+      <div id ="edit_image" style={{overflow: "hidden",position:"relative",width:"100px"}}><input type="file" name="profile" id="inputWrapper" onChange={fileChange}  accept=".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|image/*"/><img src="edit.png" style={{position:"relative",top:"-66px",zIndex:"350"}} width="42px"/></div>
       <div style={{fontWeight:"700",color:"black",position:"relative",top:"-70px"}}>{props.name}</div>
       <div style={{borderBottom:"1px  solid grey",position:"relative",top:"-70px", paddingBottom:"30px",fontWeight:"500",color:"grey"}}>{props.email}</div>
       <div className="button" style={{marginTop:"25px",position:"relative",top:"-75px"}}><button type="submit" style={{border:"1px grey solid", borderRadius:"10px", width:"100px", height:"40px",fontWeight:"500",cursor:"pointer"}} className="btn1" onClick={signOut}>Sign out</button></div>
