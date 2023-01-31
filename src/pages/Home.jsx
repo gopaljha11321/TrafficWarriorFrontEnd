@@ -72,7 +72,7 @@ const Home = () => {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-    }, 30);
+    }, 1000);
     setLoading(true);
   }, []);
   function register() {
@@ -182,7 +182,7 @@ const Home = () => {
       });
       await setTimeout(() => {
         setLoading(false);
-      }, 3000);
+      }, 1000);
       setLoading(true);
       setregisterPage(true);
       setError("Server Down")

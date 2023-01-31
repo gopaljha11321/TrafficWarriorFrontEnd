@@ -43,7 +43,7 @@ const Dashboard=()=>
         setUserdata(res.data);
         setTimeout(()=>{
             setLoading(false);  
-        },30)
+        },1000)
         setLoading(true);
     }
     })
