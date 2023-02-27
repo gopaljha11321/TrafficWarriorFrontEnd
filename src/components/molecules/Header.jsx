@@ -1,6 +1,6 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import api from "../conf/axios";
 import env from "../conf/env";
 import './header.css';
 const Header = (props) => {
@@ -21,11 +21,11 @@ const Header = (props) => {
    }
   }
     const user=localStorage.getItem("id");
-    axios.get(env[process.env.NODE_ENV]?.appServer+"profile_image?user="+user).then((res)=>
+    api.get("/profile_image?user="+user).then((res)=>
     {
       if(res!="error occure")
       {
-        setProfileImg(env[process.env.NODE_ENV]?.appServer+"profile_image?user="+user)
+        setProfileImg(env[process.env.NODE_ENV]?.appServer+"profile_image?user="+user+"&auth=false")
         setProfileImgStatus(true);
       }
     })
@@ -58,19 +58,19 @@ const Header = (props) => {
     const data=new FormData();
     data.append('image',event.target.files[0]);
     data.append("id",user);
-    await axios.post(env[process.env.NODE_ENV]?.appServer+"upload_profile_image",data,config).then((res,err)=>
+    await api.post("/upload_profile_image",data,config).then((res,err)=>
     {
       if(err)
       {
         return ;
       }
     })
-    axios.get(env[process.env.NODE_ENV]?.appServer+"profile_image?user="+user).then((res)=>
+    api.get("/profile_image?user="+user).then((res)=>
     {
       if(res!="error occure")
       {
         setProfileImgStatus(false);
-        setProfileImg(env[process.env.NODE_ENV]?.appServer+"profile_image?user="+user)
+        setProfileImg(env[process.env.NODE_ENV]?.appServer+"profile_image?user="+user+"&auth=false")
        
       }
     })

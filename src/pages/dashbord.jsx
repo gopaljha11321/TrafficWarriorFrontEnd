@@ -1,9 +1,9 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import HashLoader from "react-spinners/HashLoader";
 import Header from "../components/molecules/Header";
 import env from "../components/conf/env";
+import api from "../components/conf/axios"
 const override = {
     display: "flex",
     margin: "auto auto",
@@ -32,7 +32,7 @@ const Dashboard=()=>
         id:localStorage.getItem("id")
     }
     setProfile(true);
-    axios.post(env[process.env.NODE_ENV]?.appServer+"user",data).then((res)=>
+    api.post("/user",data).then((res)=>
     {
         if(res.data?.msg==="wrong id")
         {

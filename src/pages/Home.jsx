@@ -1,9 +1,8 @@
-import axios from "axios";
 import { useFormik } from "formik";
 import { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import HashLoader from "react-spinners/HashLoader";
-import env from "../components/conf/env";
+import api from "../components/conf/axios";
 import "./style.css";
 const initialValues = {
   login_email: "",
@@ -121,7 +120,7 @@ const Home = () => {
   {
   localStorage.setItem("save","enable");
   }
-  axios.post(env[process.env.NODE_ENV]?.appServer+"login",data).then((res)=>
+  api.post("/login",data).then((res)=>
     {
       setLoading(false)
       if(res.data?.res_code)
@@ -162,7 +161,7 @@ const Home = () => {
    
   else if(values.condition)
     {
-      axios.post(env[process.env.NODE_ENV]?.appServer+"register",data).then((res)=>
+      api.post("/register",data).then((res)=>
       {
         if(res.data.res_code!=1)
         {

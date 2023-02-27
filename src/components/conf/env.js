@@ -2,6 +2,7 @@ const env={
     local:
     {
         appServer:"http://localhost:3001/",
+        APIKey:"GFZC25HCf$%#^FSHD#SGSJJSNKAK@@$!JDHGSBS"
     },
     production:
     {
