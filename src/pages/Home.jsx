@@ -126,6 +126,8 @@ const Home = () => {
       if(res.data?.res_code)
       {
         localStorage.setItem("id",res.data.id)
+        localStorage.setItem("auth",res.data.auth)
+        api.defaults.headers.common['Authorization']=res.data.auth;
         history('/dashboard');
       }
       else{

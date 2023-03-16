@@ -6,7 +6,8 @@ import SignOut from "../components/atoms/SignOut";
 import {LinkedInCallback} from 'react-linkedin-login-oauth2';
 import About from "../pages/about"
 import Report from "../pages/report";
-import Image from "../pages/image"
+import Image from "../pages/image";
+import Material from "../learning/Material"
 export const main=[
     {
         path:'/linkedin',
@@ -44,5 +45,9 @@ export const main=[
     {
         path:"/image",
         component:Image
+    },
+    {
+        path:"/materialUI",
+        component:Material
     }
 ]

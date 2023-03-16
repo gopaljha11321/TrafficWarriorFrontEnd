@@ -1,9 +1,8 @@
-import Header from "../components/molecules/Header";
-import {useState,useEffect} from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import HashLoader from "react-spinners/HashLoader";
-import axios from "axios";
-import env from "../components/conf/env"
+import api from "../components/conf/axios";
+import Header from "../components/molecules/Header";
 const override = {
     display: "flex",
     margin: "auto auto",
@@ -31,7 +30,7 @@ const Image=()=>
         id:localStorage.getItem("id")
     }
     setProfile(true);
-    axios.post(env[process.env.NODE_ENV]?.appServer+"user",data).then((res)=>
+    api.post("/user",data).then((res)=>
     {
         if(res.data?.msg==="wrong id")
         {
@@ -56,7 +55,7 @@ const Image=()=>
             cssOverride={override}
           />:
           <div>
-        <Header name={userdata.name}profile={profile} changeProfile={changeProfile} email={userdata.email} page="Image_page"/>
+        <Header name={userdata.name} profile={profile} changeProfile={changeProfile} email={userdata.email} page="Image_page"/>
         <div className="content" style={{width:"100%", height:"500px"}} onClick={()=>
         {
             setProfile(false);

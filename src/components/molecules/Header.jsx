@@ -4,6 +4,7 @@ import api from "../conf/axios";
 import env from "../conf/env";
 import './header.css';
 const Header = (props) => {
+  console.log(props.name)
   const history = useNavigate();
   const [profileImg,setProfileImg]=useState("");
   const[profileImgStatue,setProfileImgStatus]=useState(false);
@@ -101,7 +102,7 @@ const Header = (props) => {
   <div className="collapse navbar-collapse" id="navbarSupportedContent">
     <ul className="navbar-nav mr-auto">
       <li className="nav-item active">
-        <Link className="nav-link" to="/home" id="Home_page" style={{cursor:"pointer",color:"White"}} >Home <span className="sr-only">(current)</span></Link>
+        <Link className="nav-link" to="/dashboard" id="Home_page" style={{cursor:"pointer",color:"White"}} >Home <span className="sr-only">(current)</span></Link>
       </li>
       <li className="nav-item ">
         <Link className="nav-link" id="Image_page" to="/image" style={{cursor:"pointer",color:"White"}} >Images <span className="sr-only">(current)</span></Link>
