@@ -43,7 +43,7 @@ export const main=[
         component:Report
     },
     {
-        path:"/image",
+        path:"/questions",
         component:Image
     },
     {

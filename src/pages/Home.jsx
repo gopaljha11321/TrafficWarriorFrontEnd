@@ -22,6 +22,7 @@ const override = {
 
 const pass=()=>
 {
+  
   const class_icon=document.getElementsByTagName('i');
   const login_password=document.getElementById('login_password');
   if(class_icon[0].className==="fa fa-eye-slash")
@@ -198,7 +199,7 @@ const Home = () => {
     <div className="test">
       {loading ? (
         <HashLoader
-          color={"#F37A24"}
+          color={"grey"}
           loading={loading}
           size={50}
           cssOverride={override}
@@ -215,7 +216,7 @@ const Home = () => {
                 Register
               </button>
             </div>
-            <div id="login" className="input-group">
+            <div id="login" className="input-group"style={{position:"absolute",width:"280px"}}>
             <div style={{textAlign:"center",color:"red", width:"100%"}}>{error}</div>
               <input
                 type="text"
@@ -226,7 +227,7 @@ const Home = () => {
                 onChange={handleChange}
                 value={values.login_email}
               />
-              <i className="fa fa-eye" id="eye" onClick={pass}></i> 
+           <i className="fa fa-eye" id="eye" onClick={pass}></i>
               <input
                 type="password"
                 id="login_password"
@@ -236,7 +237,6 @@ const Home = () => {
                 value={values.login_password}
                 required
               />
-              
               <input
                 type="checkbox"
                 id="save"
@@ -255,7 +255,7 @@ const Home = () => {
               <img src="download (1).png" />
             </div>
 
-            <div id="register" className="input-group">
+            <div id="register" className="input-group" style={{position:"absolute",width:"280px"}}>
             <div style={{textAlign:"center",color:"red", width:"100%"}}>{error}</div>
               
               <input

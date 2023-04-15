@@ -73,8 +73,7 @@
  .bg
  {
     background:linear-gradient(to right,#ff105f,#ffad06);
-    width:100%;
-    border-radius:30px;
+    width:280px;
     padding: 10px 30px;
  }
  
@@ -83,6 +82,7 @@
      position: absolute;
      width:280px;
      transition: .5s;
+     
  }
  .input-field{
      width: 100%;
@@ -142,7 +142,7 @@
     top:22px;
     left:90%;
     cursor: pointer;
-    z-index: 2;
+    z-index: 4;
  }
  .input-field1
  {

@@ -47,7 +47,7 @@ const About = () => {
       {" "}
       {loading ? (
         <HashLoader
-          color={"#F37A24"}
+          color={"grey"}
           loading={loading}
           size={50}
           cssOverride={override}

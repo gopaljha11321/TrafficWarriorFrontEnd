@@ -4,12 +4,11 @@ import HashLoader from "react-spinners/HashLoader";
 import api from "../components/conf/axios";
 import Header from "../components/molecules/Header";
 import Footer from "../components/molecules/footer";
-import "./info.css"
+import "../components/molecules/info.css"
 const override = {
     display: "flex",
     margin: "auto auto",
     height: "750px",
-    borderColor: "red",
   };
 const Dashboard=()=>
 {
@@ -53,7 +52,7 @@ const Dashboard=()=>
     return (<>
     <div>
         {loading?<HashLoader
-          color={"#F37A24"}
+          color={"grey"}
           loading={loading}
           size={50}
           cssOverride={override}
@@ -64,13 +63,13 @@ const Dashboard=()=>
         {
             setProfile(false);
         }}>
-            <header class="masthead" style={{postion:"absolute"}}>
-            <div class="container px-4 px-lg-5 d-flex h-100 align-items-center justify-content-center">
-                <div class="d-flex justify-content-center">
-                    <div class="text-center">
-                        <h1 class="mx-auto my-0 text-uppercase">Evaluate</h1>
-                        <h2 class="text-white-50 mx-auto mt-2 mb-5">Subjective Answer Evaluation using AI.</h2>
-                        <Link class="btn btn-primary" to="/about">Get Started</Link>
+            <header className="masthead" style={{postion:"absolute"}}>
+            <div className="container px-4 px-lg-5 d-flex h-100 align-items-center justify-content-center">
+                <div className="d-flex justify-content-center">
+                    <div className="text-center">
+                        <h1 className="mx-auto my-0 text-uppercase">Evaluate</h1>
+                        <h2 className="text-white-50 mx-auto mt-2 mb-5">Subjective Answer Evaluation using AI.</h2>
+                        <Link className="btn btn-primary" to="/about">Get Started</Link>
                     </div>
                 </div>
             </div>

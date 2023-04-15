@@ -12,6 +12,11 @@
     "start_prod": "cross-env NODE_ENV=production vite"
   },
   "dependencies": {
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
+    "@material-ui/core": "^4.12.4",
+    "@mui/icons-material": "^5.11.16",
+    "@mui/material": "^5.12.0",
     "axios": "^1.2.2",
     "bootstrap": "^5.2.3",
     "formik": "^2.2.9",

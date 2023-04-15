@@ -5,7 +5,6 @@ const App = () => {
   function onUserNavigate() {
     let idleTime = getCurrentTime() - getPreviousNavTime();
     storeCurrentNavTime();
-    console.log(idleTime)
     if (idleTime > 1)
         window.location.href = '/Signout';
 }
