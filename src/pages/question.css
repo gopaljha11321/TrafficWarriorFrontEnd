@@ -1,0 +1,19 @@
+.crossIcon
+{
+    position: relative;
+    left: -8px;
+    top: -8px;
+    background-color: whitesmoke;
+    height: 17px;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    width: 17px;
+}
+.crossIcon:hover
+{
+    outline: none;
+    border-color: #9ecaed;
+    box-shadow: 0 0 10px #9ecaed;
+    cursor: pointer ;
+}

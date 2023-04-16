@@ -86,7 +86,7 @@ const Home = () => {
     z.style.left = "0px";
   }
   useEffect(() => {
-    if(localStorage.getItem("id")!=null&& localStorage.getItem("save")==="enable")
+    if(sessionStorage.getItem("id")!=null&& sessionStorage.getItem("save")==="enable")
     {
       history('/dashboard');
     }
@@ -115,19 +115,19 @@ const Home = () => {
   else{
   if(values.save===false)
   {
-    localStorage.setItem("save","disable");
+    sessionStorage.setItem("save","disable");
   }
   else
   {
-  localStorage.setItem("save","enable");
+  sessionStorage.setItem("save","enable");
   }
   api.post("/login",data).then((res)=>
     {
       setLoading(false)
       if(res.data?.res_code)
       {
-        localStorage.setItem("id",res.data.id)
-        localStorage.setItem("auth",res.data.auth)
+        sessionStorage.setItem("id",res.data.id)
+        sessionStorage.setItem("auth",res.data.auth)
         api.defaults.headers.common['Authorization']=res.data.auth;
         history('/dashboard');
       }

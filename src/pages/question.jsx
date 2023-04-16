@@ -10,6 +10,7 @@ import Fab from "@mui/material/Fab";
 import Paper from "@mui/material/Paper";
 import { useFormik } from "formik";
 import Box from "@mui/material/Box";
+import "./question.css";
 import { Slider, TextField, Button } from "@mui/material";
 const override = {
   display: "flex",
@@ -24,7 +25,7 @@ const initialValues = {
   Layer: 5,
   NLP: 0.5,
 };
-const Image = () => {
+const Question = () => {
   const history = useNavigate();
   const [errorQuestion, setErrorQuestion] = useState("");
   const [errorKey, setErrorKey] = useState("");
@@ -33,37 +34,77 @@ const Image = () => {
   const [userdata, setUserdata] = useState({});
   const [profile, setProfile] = useState(true);
   const [sampleAnswer, SetSampleAnswer] = useState([]);
-  const [key, setKey] = useState([]);
-
+  const [samplekey, setKey] = useState([]);
   const { values, setValues, handleBlur, handleChange, handleSubmit } =
     useFormik({
       initialValues: initialValues,
     });
 
-  const addSample = () => {
-    if(values.SampleAnswer==="")
+  const add=()=>
+  {
+    if(values.Question==="")
     {
-      setErrorSampleAnswer("Enter Sample Answer")
+      setErrorQuestion("Please Enter Question")
     }
-    else{
-      setErrorSampleAnswer("");
-    const temp = sampleAnswer;
-    temp.push(values.SampleAnswer);
+    if(samplekey.length===0)
+    {
+      setErrorKey("Please Add Key")
+    }
+    if(sampleAnswer.length===0)
+    {
+      setErrorSampleAnswer("Please Add Sample Answer")
+    }
+    if(values.Question!="" && samplekey.length!=0 && sampleAnswer.length!=0){
+    const data={
+      question:values.Question,
+      sample:sampleAnswer,
+      keys:samplekey,
+      percentage:values.NLP,
+      layer:values.Layer
+    }
+      api.post("/addQuestion",data).then((res)=>{
+        console.log(res.data)
+      })
+      // SetSampleAnswer([]);
+      // setKey([]);
+      // setValues({...values,Question:"",SampleAnswer:"",Key:""})
+    }
+  } 
+  const deleteKey = (evt) => {
+    let index = Number(evt.target.id);
+    let temp = samplekey;
+    temp.splice(index, 1);
+    setKey(temp);
+    setValues({ ...values });
+  };
+
+  const deleteSampleAnswer = (evt) => {
+    let index = evt.target.id;
+    let temp = sampleAnswer;
+    temp.splice(index, 1);
     SetSampleAnswer(temp);
-    setValues({ ...values, SampleAnswer: "" });
+    setValues({ ...values });
+  };
+  const addSample = () => {
+    if (values.SampleAnswer === "") {
+      setErrorSampleAnswer("Enter Sample Answer");
+    } else {
+      setErrorSampleAnswer("");
+      const temp = sampleAnswer;
+      temp.push(values.SampleAnswer);
+      SetSampleAnswer(temp);
+      setValues({ ...values, SampleAnswer: "" });
     }
   };
   const addKey = () => {
-    if(values.Key==="")
-    {
-      setErrorKey("Enter Key")
-    }
-    else{
-    setErrorKey("")
-    const temp = key;
-    temp.push(values.Key);
-    setKey(temp);
-    setValues({ ...values, Key: "" });
+    if (values.Key === "") {
+      setErrorKey("Enter Key");
+    } else {
+      setErrorKey("");
+      const temp = samplekey;
+      temp.push(values.Key);
+      setKey(temp);
+      setValues({ ...values, Key: "" });
     }
   };
   document.title = "Images";
@@ -72,16 +113,16 @@ const Image = () => {
     setProfile(true);
   };
   useEffect(() => {
-    if (localStorage.getItem("id") === null) {
+    if (sessionStorage.getItem("id") === null) {
       history("/");
     } else {
       const data = {
-        id: localStorage.getItem("id"),
+        id: sessionStorage.getItem("id"),
       };
       setProfile(true);
       api.post("/user", data).then((res) => {
         if (res.data?.msg === "wrong id") {
-          localStorage.clear();
+          sessionStorage.clear();
           history("/");
         } else {
           setUserdata(res.data);
@@ -183,7 +224,7 @@ const Image = () => {
                   />
                 ) : (
                   <TextField
-                  error
+                    error
                     id="SampleAnswer"
                     label="Sample Answer"
                     variant="standard"
@@ -200,62 +241,78 @@ const Image = () => {
                 </Fab>
                 <div style={{ display: "flex", flexWrap: "wrap" }}>
                   {sampleAnswer.map((item, index) => (
-                    <Paper
-                      key={index}
-                      elevation={3}
-                      style={{
-                        width: "150px",
-                        height: "60px",
-                        margin: "0 0 20px 20px",
-                        padding: "5px 0 0 5px",
-                      }}
-                    >
-                      {item}
-                    </Paper>
+                    <>
+                      <Paper
+                        key={index}
+                        elevation={3}
+                        style={{
+                          width: "auto",
+                          margin: "0px 0px 10px 10px",
+                          padding: "5px"
+                        }}
+                      >
+                        {item}
+                      </Paper>
+                      <div className="crossIcon">
+                        <i
+                          className="fa fa-times"
+                          aria-hidden="true"
+                          id={index}
+                          onClick={deleteSampleAnswer}
+                        ></i>
+                      </div>
+                    </>
                   ))}
                 </div>
                 {!errorKey ? (
                   <TextField
-                  id="Key"
-                  label="Key"
-                  variant="standard"
-                  style={{ width: "70%", margin: "0 20px 20px 20px" }}
-                  value={values.Key}
-                  onChange={handleChange}
+                    id="Key"
+                    label="Key"
+                    variant="standard"
+                    style={{ width: "70%", margin: "0 20px 20px 20px" }}
+                    value={values.Key}
+                    onChange={handleChange}
                   />
                 ) : (
                   <TextField
-                  error
-                  id="Key"
-                  label="Key"
-                  variant="standard"
-                  style={{ width: "70%", margin: "0 20px 20px 20px" }}
-                  value={values.Key}
-                  onChange={handleChange}
+                    error
+                    id="Key"
+                    label="Key"
+                    variant="standard"
+                    style={{ width: "70%", margin: "0 20px 20px 20px" }}
+                    value={values.Key}
+                    onChange={handleChange}
                     helperText={errorKey}
                   />
                 )}
-                
+
                 <Fab color="primary" aria-label="add" size="small">
                   <AddIcon onClick={addKey} />
                 </Fab>
                 <div style={{ display: "flex", flexWrap: "wrap" }}>
-                  {key.map((item, index) => (
-                    <Paper
-                      key={index}
-                      elevation={3}
-                      style={{
-                        width: "150px",
-                        height: "60px",
-                        margin: "0 0 20px 20px",
-                        padding: "5px 0 0 5px",
-                      }}
-                    >
-                      {item}
-                    </Paper>
+                  {samplekey.map((item, index) => (
+                    <>
+                      <Paper
+                        key={index}
+                        elevation={3}
+                        style={{
+                          width: "auto",
+                          margin: "0px 0px 10px 10px",
+                          padding: "5px"
+                        }}
+                      >
+                        {item}
+                      </Paper>
+                      <div className="crossIcon" onClick={deleteKey}>
+                        <i
+                          className="fa fa-times"
+                          id={index}
+                          aria-hidden="true"
+                        ></i>
+                      </div>
+                    </>
                   ))}
                 </div>
-
                 <div
                   className="layer"
                   style={{
@@ -275,6 +332,7 @@ const Image = () => {
                   valueLabelDisplay="auto"
                   step={1}
                   min={1}
+                  name="Layer"
                   max={10}
                   style={{ width: "90%", margin: "0 0 20px 20px" }}
                   onChange={handleChange}
@@ -297,6 +355,7 @@ const Image = () => {
                   defaultValue={0.5}
                   aria-label="Default"
                   valueLabelDisplay="auto"
+                  name="NLP"
                   step={0.1}
                   min={0.1}
                   max={1}
@@ -305,7 +364,7 @@ const Image = () => {
                   value={values.NLP}
                 />
                 <div style={{ textAlign: "center", marginBottom: "20px" }}>
-                  <Button variant="contained">Add</Button>
+                  <Button variant="contained" onClick={add}>Add</Button>
                 </div>
               </Box>
             </div>
@@ -315,4 +374,4 @@ const Image = () => {
     </>
   );
 };
-export default Image;
+export default Question;

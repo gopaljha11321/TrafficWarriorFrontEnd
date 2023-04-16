@@ -4,7 +4,7 @@ const SignOut=()=>{
     const history = useNavigate();
     useEffect(()=>
     {
-        localStorage.clear();
+        sessionStorage.clear();
         history('/');
 
     })

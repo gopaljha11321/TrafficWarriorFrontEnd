@@ -4,7 +4,7 @@ const api =axios.create({
 baseURL: env[process.env.NODE_ENV]?.appServer,
 timeout: 10000,
 headers:{
-    key:localStorage.getItem("auth")
+    key:sessionStorage.getItem("auth")
 }
 })
 export default api;

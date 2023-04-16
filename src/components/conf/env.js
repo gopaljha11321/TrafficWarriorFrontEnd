@@ -6,7 +6,8 @@ const env={
     },
     production:
     {
-        appServer:"https://trafficwarrior.onrender.com/"
+        appServer:"https://trafficwarrior.onrender.com/",
+        APIKey:"GFZC25HCf$%#^FSHD#SGSJJSNKAK@@$!JDHGSBS"
     }
 }
 export default env;

@@ -21,16 +21,16 @@ const About = () => {
     setProfile(true);
   };
   useEffect(() => {
-    if (localStorage.getItem("id") === null) {
+    if (sessionStorage.getItem("id") === null) {
       history("/");
     } else {
       const data = {
-        id: localStorage.getItem("id"),
+        id: sessionStorage.getItem("id"),
       };
       setProfile(true);
       api.post("/user", data).then((res) => {
         if (res.data?.msg === "wrong id") {
-          localStorage.clear();
+          sessionStorage.clear();
           history("/");
         } else {
           setUserdata(res.data);
