@@ -242,11 +242,11 @@ const Header = (props) => {
               <li className="nav-item ">
                 <Link
                   className="nav-link"
-                  to="/report"
+                  to="/evaluate"
                   id="Report_page"
                   style={{ cursor: "pointer", color: "White" }}
                 >
-                  Report <span className="sr-only">(current)</span>
+                  Evaluate <span className="sr-only">(current)</span>
                 </Link>
               </li>
               <li className="nav-item ">

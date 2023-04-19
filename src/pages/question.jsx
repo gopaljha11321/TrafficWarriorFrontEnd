@@ -8,7 +8,7 @@ import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
 import Fab from "@mui/material/Fab";
 import Paper from "@mui/material/Paper";
-import { useFormik } from "formik";
+import { Formik, useFormik } from "formik";
 import Box from "@mui/material/Box";
 import "./question.css";
 import { Slider, TextField, Button } from "@mui/material";
@@ -40,36 +40,36 @@ const Question = () => {
       initialValues: initialValues,
     });
 
-  const add=()=>
-  {
-    if(values.Question==="")
-    {
-      setErrorQuestion("Please Enter Question")
+  const add = () => {
+    if (values.Question === "") {
+      setErrorQuestion("Please Enter Question");
     }
-    if(samplekey.length===0)
-    {
-      setErrorKey("Please Add Key")
+    if (samplekey.length === 0) {
+      setErrorKey("Please Add Key");
     }
-    if(sampleAnswer.length===0)
-    {
-      setErrorSampleAnswer("Please Add Sample Answer")
+    if (sampleAnswer.length === 0) {
+      setErrorSampleAnswer("Please Add Sample Answer");
     }
-    if(values.Question!="" && samplekey.length!=0 && sampleAnswer.length!=0){
-    const data={
-      question:values.Question,
-      sample:sampleAnswer,
-      keys:samplekey,
-      percentage:values.NLP,
-      layer:values.Layer
+    if (
+      values.Question != "" &&
+      samplekey.length != 0 &&
+      sampleAnswer.length != 0
+    ) {
+      const data = {
+        question: values.Question,
+        sample: sampleAnswer,
+        keys: samplekey,
+        percentage: [1 - values.NLP, values.NLP],
+        layer: values.Layer,
+      };
+      api.post("/addQuestion", data).then((res) => {
+        console.log(res.data);
+      });
+      setValues({ ...values, Question: "", SampleAnswer: "", Key: "" });
+      setKey([]);
+      SetSampleAnswer([]);
     }
-      api.post("/addQuestion",data).then((res)=>{
-        console.log(res.data)
-      })
-      // SetSampleAnswer([]);
-      // setKey([]);
-      // setValues({...values,Question:"",SampleAnswer:"",Key:""})
-    }
-  } 
+  };
   const deleteKey = (evt) => {
     let index = Number(evt.target.id);
     let temp = samplekey;
@@ -107,7 +107,7 @@ const Question = () => {
       setValues({ ...values, Key: "" });
     }
   };
-  document.title = "Images";
+  document.title = "Question";
 
   const changeProfile = () => {
     setProfile(true);
@@ -248,7 +248,7 @@ const Question = () => {
                         style={{
                           width: "auto",
                           margin: "0px 0px 10px 10px",
-                          padding: "5px"
+                          padding: "5px",
                         }}
                       >
                         {item}
@@ -298,7 +298,7 @@ const Question = () => {
                         style={{
                           width: "auto",
                           margin: "0px 0px 10px 10px",
-                          padding: "5px"
+                          padding: "5px",
                         }}
                       >
                         {item}
@@ -364,7 +364,9 @@ const Question = () => {
                   value={values.NLP}
                 />
                 <div style={{ textAlign: "center", marginBottom: "20px" }}>
-                  <Button variant="contained" onClick={add}>Add</Button>
+                  <Button variant="contained" onClick={add}>
+                    Add
+                  </Button>
                 </div>
               </Box>
             </div>

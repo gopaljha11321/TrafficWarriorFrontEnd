@@ -5,7 +5,7 @@ import Dashboard from "../pages/dashbord";
 import SignOut from "../components/atoms/SignOut";
 import {LinkedInCallback} from 'react-linkedin-login-oauth2';
 import About from "../pages/about"
-import Report from "../pages/report";
+import Evaluate from "../pages/report";
 import Question from "../pages/question";
 import Material from "../learning/Material"
 export const main=[
@@ -39,8 +39,8 @@ export const main=[
         component:About
     },
     {
-        path:'/report',
-        component:Report
+        path:'/evaluate',
+        component:Evaluate
     },
     {
         path:"/questions",
