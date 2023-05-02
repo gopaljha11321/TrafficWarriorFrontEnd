@@ -165,7 +165,6 @@ const Question = () => {
               style={{
                 position: "absolute",
                 top: "56px",
-                border: "2px red solid",
                 width: "100%",
                 backgroundImage: "linear-gradient(to right, grey 80%, black )",
                 flexDirection: "column",
@@ -181,6 +180,7 @@ const Question = () => {
                   backgroundColor: "white",
                   margin: "5%",
                   height: "80%",
+                  maxWidth: "500px",
                 }}
               >
                 <div
@@ -257,6 +257,7 @@ const Question = () => {
                         <i
                           className="fa fa-times"
                           aria-hidden="true"
+                          key={index}
                           id={index}
                           onClick={deleteSampleAnswer}
                         ></i>
@@ -307,6 +308,7 @@ const Question = () => {
                         <i
                           className="fa fa-times"
                           id={index}
+                          key={index}
                           aria-hidden="true"
                         ></i>
                       </div>
