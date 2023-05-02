@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import HashLoader from "react-spinners/HashLoader";
+import BeatLoader from "react-spinners/BeatLoader";
 import api from "../components/conf/axios";
 import Header from "../components/molecules/Header";
-// import Box from "@mui/material/Box";
+import TextareaAutosize from "@mui/base/TextareaAutosize";
+import { Button } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
+import { useRef } from "react";
 const override = {
   display: "flex",
   margin: "auto auto",
@@ -16,10 +19,19 @@ const Evaluate = () => {
   document.title = "Evaluate";
   const history = useNavigate();
   const [loading, setLoading] = useState(true);
-  const [userdata, setUserdata] = useState({});
+  const [userData, setUserData] = useState({});
   const [profile, setProfile] = useState(true);
   const [questions, setQuestions] = useState([]);
   const [questionCode, setQuestionsCode] = useState(0);
+  const [status, setStatus] = useState(true);
+  const [buttonStatus, setButtonStatus] = useState(false);
+  const [evaluateAnswer, setEvaluateAnswer] = useState("");
+  const [scoreLoader, setScoreLoader] = useState(false);
+  const [score, setScore] = useState("");
+
+  const answer = useRef();
+  const selectQuestion = useRef();
+
   const options = questions.map((option) => {
     const firstLetter = option.label[0].toUpperCase();
     return {
@@ -27,7 +39,19 @@ const Evaluate = () => {
       ...option,
     };
   });
-  const handleOncChange = (evt) => {
+  const throttling = () => {
+    if (status === true) {
+      setStatus(false);
+      setTimeout(() => {
+        setStatus(true);
+        let inputAnswer = answer.current.value;
+        setEvaluateAnswer(inputAnswer);
+      }, 1000);
+    }
+  };
+  const handleOnChange = (evt) => {
+    setScore("");
+    setEvaluateAnswer("");
     const temp = evt.target.innerHTML;
     let code = 0;
     for (let i = 0; i < questions.length; i++) {
@@ -37,6 +61,7 @@ const Evaluate = () => {
       }
     }
     if (code > 0) {
+      answer.current.disabled = false;
       api.get(`/average?data=${code}`).then((res) => {
         console.log(res);
       });
@@ -44,6 +69,18 @@ const Evaluate = () => {
   };
   const changeProfile = () => {
     setProfile(true);
+  };
+
+  const onEvaluate = () => {
+    setScoreLoader(true);
+    const data = {
+      code: questionCode,
+      answer: answer.current.value,
+    };
+    api.post("/evaluate", data).then((res) => {
+      setScore(res.data);
+      setScoreLoader(false);
+    });
   };
 
   useEffect(() => {
@@ -59,7 +96,7 @@ const Evaluate = () => {
           sessionStorage.clear();
           history("/");
         } else {
-          setUserdata(res.data);
+          setUserData(res.data);
           setTimeout(() => {
             setLoading(false);
           }, 1000);
@@ -67,12 +104,23 @@ const Evaluate = () => {
         }
       });
     }
-  }, []);
-  useEffect(() => {
     api.get("/questions").then((res) => {
       setQuestions(res.data);
     });
   }, []);
+
+  useEffect(() => {
+    // answer.current.value = evaluateAnswer;
+    // answer.current?.value = evaluateAnswer;
+  }, [score]);
+
+  useEffect(() => {
+    if (!evaluateAnswer) {
+      setButtonStatus(true);
+    } else {
+      setButtonStatus(false);
+    }
+  }, [evaluateAnswer]);
   return (
     <>
       {loading ? (
@@ -85,11 +133,11 @@ const Evaluate = () => {
       ) : (
         <>
           <Header
-            name={userdata.name}
+            name={userData.name}
             page="Report_page"
             profile={profile}
             changeProfile={changeProfile}
-            email={userdata.email}
+            email={userData.email}
           />
           <div
             className="content"
@@ -115,30 +163,73 @@ const Evaluate = () => {
               style={{
                 backgroundColor: "white",
                 width: "90%",
+                maxWidth: "500px",
+                minHeight: "300px",
                 margin: "5%",
-                height: "80%",
+                height: "auto",
                 position: "absolute",
                 padding: "20px",
                 display: "flex",
                 justifyContent: "center",
+                alignItems: "center",
+                flexDirection: "column",
               }}
             >
-              <Autocomplete
-                id="grouped-demo"
-                options={options.sort(
-                  (a, b) => -b.firstLetter.localeCompare(a.firstLetter)
-                )}
-                groupBy={(option) => option.firstLetter}
-                getOptionLabel={(option) => option.label}
-                isOptionEqualToValue={(option, value) =>
-                  option.code === value.code
-                }
-                sx={{ width: 300 }}
-                renderInput={(params) => (
-                  <TextField {...params} label="Select question" />
-                )}
-                onChange={handleOncChange}
-              />
+              {scoreLoader ? (
+                <BeatLoader />
+              ) : (
+                <>
+                  <Autocomplete
+                    id="grouped-demo"
+                    ref={selectQuestion}
+                    options={options.sort(
+                      (a, b) => -b.firstLetter.localeCompare(a.firstLetter)
+                    )}
+                    groupBy={(option) => option.firstLetter}
+                    getOptionLabel={(option) => option.label}
+                    isOptionEqualToValue={(option, value) =>
+                      option.code === value.code
+                    }
+                    sx={{ width: 300 }}
+                    renderInput={(params) => (
+                      <TextField {...params} label="Select question" />
+                    )}
+                    onChange={handleOnChange}
+                  />
+                  <br />
+                  <textarea
+                    ref={answer}
+                    id="userInput"
+                    name="Answer"
+                    rows="4"
+                    cols="50"
+                    disabled={true}
+                    onChange={throttling}
+                    placeholder="Enter your Answer"
+                    style={{ textAlign: "center", paddingTop: "5px" }}
+                  ></textarea>
+                  <br />
+                  {score && (
+                    <div
+                      className="score"
+                      style={{
+                        width: "100%",
+                        marginBottom: "10px",
+                        paddingLeft: "22px",
+                      }}
+                    >
+                      {score}
+                    </div>
+                  )}
+                  <Button
+                    disabled={buttonStatus}
+                    onClick={onEvaluate}
+                    variant="contained"
+                  >
+                    Evaluate
+                  </Button>
+                </>
+              )}
             </div>
           </div>
         </>
