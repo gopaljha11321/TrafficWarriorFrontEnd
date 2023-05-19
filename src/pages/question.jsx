@@ -3,12 +3,10 @@ import { useNavigate } from "react-router-dom";
 import HashLoader from "react-spinners/HashLoader";
 import api from "../components/conf/axios";
 import Header from "../components/molecules/Header";
-import Footer from "../components/molecules/footer";
 import AddIcon from "@mui/icons-material/Add";
-import EditIcon from "@mui/icons-material/Edit";
 import Fab from "@mui/material/Fab";
 import Paper from "@mui/material/Paper";
-import { Formik, useFormik } from "formik";
+import { useFormik } from "formik";
 import Box from "@mui/material/Box";
 import "./question.css";
 import { Slider, TextField, Button } from "@mui/material";
@@ -34,7 +32,7 @@ const Question = () => {
   const [userdata, setUserdata] = useState({});
   const [profile, setProfile] = useState(true);
   const [sampleAnswer, SetSampleAnswer] = useState([]);
-  const [samplekey, setKey] = useState([]);
+  const [sampleKey, setSampleKey] = useState([]);
   const { values, setValues, handleBlur, handleChange, handleSubmit } =
     useFormik({
       initialValues: initialValues,
@@ -44,7 +42,7 @@ const Question = () => {
     if (values.Question === "") {
       setErrorQuestion("Please Enter Question");
     }
-    if (samplekey.length === 0) {
+    if (sampleKey.length === 0) {
       setErrorKey("Please Add Key");
     }
     if (sampleAnswer.length === 0) {
@@ -52,13 +50,19 @@ const Question = () => {
     }
     if (
       values.Question != "" &&
-      samplekey.length != 0 &&
+      sampleKey.length != 0 &&
       sampleAnswer.length != 0
     ) {
+      const lowerCaseSampleAnswer = sampleAnswer.map((itr) => {
+        return itr.toLowerCase();
+      });
+      const lowerCaseSampleKey = sampleKey.map((itr) => {
+        return itr.toLowerCase();
+      });
       const data = {
         question: values.Question,
-        sample: sampleAnswer,
-        keys: samplekey,
+        sample: lowerCaseSampleAnswer,
+        keys: lowerCaseSampleKey,
         percentage: [1 - values.NLP, values.NLP],
         layer: values.Layer,
       };
@@ -66,15 +70,15 @@ const Question = () => {
         console.log(res.data);
       });
       setValues({ ...values, Question: "", SampleAnswer: "", Key: "" });
-      setKey([]);
+      setSampleKey([]);
       SetSampleAnswer([]);
     }
   };
   const deleteKey = (evt) => {
     let index = Number(evt.target.id);
-    let temp = samplekey;
+    let temp = sampleKey;
     temp.splice(index, 1);
-    setKey(temp);
+    setSampleKey(temp);
     setValues({ ...values });
   };
 
@@ -101,9 +105,9 @@ const Question = () => {
       setErrorKey("Enter Key");
     } else {
       setErrorKey("");
-      const temp = samplekey;
-      temp.push(values.Key);
-      setKey(temp);
+      const temp = sampleKey;
+      temp.push(...values.Key.split(" "));
+      setSampleKey(temp);
       setValues({ ...values, Key: "" });
     }
   };
@@ -291,7 +295,7 @@ const Question = () => {
                   <AddIcon onClick={addKey} />
                 </Fab>
                 <div style={{ display: "flex", flexWrap: "wrap" }}>
-                  {samplekey.map((item, index) => (
+                  {sampleKey.map((item, index) => (
                     <>
                       <Paper
                         key={index}

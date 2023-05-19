@@ -6,7 +6,7 @@
  .test
  {
     
-    background-image: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)),url(bg.jpg);
+    background-image: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)),url(bg.webp);
     background-position: center;
      background-size: cover;
      height:100%;
@@ -41,6 +41,7 @@
    }
  }
  .button-box{
+    background-color: black;
      width: 220px;
      margin:35px auto;
      position:relative;
@@ -52,6 +53,7 @@
      cursor: pointer;
      background: transparent;
      border: 0;
+     color:white;
      outline:none;
      position: relative;
  
@@ -66,15 +68,16 @@
      position: absolute;
      width:110px;
      height:100%;
-     background:linear-gradient(to right,#ff105f,#ffad06);
+     background:linear-gradient(90deg, grey , black);
      border-radius: 30px;
      transition: .5s;
  }
  .bg
  {
-    background:linear-gradient(to right,#ff105f,#ffad06);
+    background-image: linear-gradient(90deg, grey , black);
     width:280px;
     padding: 10px 30px;
+    color:white
  }
  
  .input-group{
@@ -103,6 +106,7 @@
      border: 0;
      outline:none;
      border-radius:30px;
+     color:white;
      background-color: #ffad06;
 
  }
@@ -114,7 +118,7 @@
      font-size: 14px;
      bottom: 64px;
      position: relative;
-     top:-2px;
+     top:0px;
      
  }
  .icons{
